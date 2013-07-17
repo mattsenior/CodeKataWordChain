@@ -41,6 +41,14 @@ class ImporterSpec extends ObjectBehavior
         $adjacentWordFinder->getAdjacentWords('bbc', $words)->shouldBeCalled()->willReturn(array('bbb', 'bbd'));
         $adjacentWordFinder->getAdjacentWords('bbd', $words)->shouldBeCalled()->willReturn(array('bbb', 'bbc'));
 
+        $dictionary->setAdjacentWords('aa', array('ab'))->shouldBeCalled();
+        $dictionary->setAdjacentWords('ab', array('aa'))->shouldBeCalled();
+        $dictionary->setAdjacentWords('aaa', array('aba'))->shouldBeCalled();
+        $dictionary->setAdjacentWords('aba', array('aaa'))->shouldBeCalled();
+        $dictionary->setAdjacentWords('bbb', array('bbc', 'bbd'))->shouldBeCalled();
+        $dictionary->setAdjacentWords('bbc', array('bbb', 'bbd'))->shouldBeCalled();
+        $dictionary->setAdjacentWords('bbd', array('bbb', 'bbc'))->shouldBeCalled();
+
         $this->processAdjacentWords();
     }
 }

@@ -7,6 +7,12 @@ use Prophecy\Argument;
 
 class DictionarySpec extends ObjectBehavior
 {
+    function let()
+    {
+        // Empty
+        $this->setWords(array());
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('WordChain\Dictionary');
@@ -33,6 +39,15 @@ class DictionarySpec extends ObjectBehavior
         $this->getWords()->shouldReturn(array('Hello', 'Goodbye'));
     }
 
+    function it_should_overwrite_words()
+    {
+        $this->addWord('Hello');
+        $this->addWord('Goodbye');
+        $this->setWords(array('Hoi', 'Goedemorgen', 'Dag'));
+        $this->getWords()->shouldHaveCount(3);
+        $this->getWords()->shouldReturn(array('Hoi', 'Goedemorgen', 'Dag'));
+    }
+
     function it_should_add_idempotently()
     {
         $this->addWord('Hello');
@@ -46,5 +61,32 @@ class DictionarySpec extends ObjectBehavior
 
         $this->addWord('Hello');
         $this->getWords()->shouldReturn(array('Hello', 'Goodbye'));
+    }
+
+    function it_should_return_an_empty_array_if_no_adjacent_words_found()
+    {
+        $this->getAdjacentWords('hello')->shouldReturn(array());
+    }
+
+    function it_should_store_adjacent_words_for_a_word()
+    {
+        $adjacentWords = array('hella', 'jello');
+        $this->setAdjacentWords('hello', $adjacentWords);
+        $this->getAdjacentWords('hello')->shouldReturn($adjacentWords);
+    }
+
+    function it_should_know_the_shortest_paths()
+    {
+        $this->setWords(array('aa', 'ab', 'bb', 'bc', 'cb', 'cc'));
+        $this->setAdjacentWords('aa', array('ab'));
+        $this->setAdjacentWords('ab', array('aa', 'bb', 'cb'));
+        $this->setAdjacentWords('bb', array('ab', 'bc', 'cb'));
+        $this->setAdjacentWords('bc', array('bb', 'cc'));
+        $this->setAdjacentWords('cb', array('bb', 'cc'));
+        $this->setAdjacentWords('cc', array('bc', 'cb'));
+
+        $this->getShortestPaths('aa', 'ab')->shouldReturn(array(array('aa', 'ab')));
+        $this->getShortestPaths('aa', 'bc')->shouldReturn(array(array('aa', 'ab', 'bb', 'bc')));
+        $this->getShortestPaths('aa', 'cc')->shouldReturn(array(array('aa', 'ab', 'cb', 'cc')));
     }
 }

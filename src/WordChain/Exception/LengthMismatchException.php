@@ -2,6 +2,6 @@
 
 namespace WordChain\Exception;
 
-class LengthMismatchException
+class LengthMismatchException extends \RuntimeException
 {
 }

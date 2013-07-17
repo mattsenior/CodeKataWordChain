@@ -2,14 +2,8 @@
 
 namespace WordChain;
 
-use Everyman\Neo4j\Client as Database;
-
 class Importer
 {
-    /**
-     * @var Dictionary
-     */
-    protected $dictionary;
 
     /**
      * @var AdjacentWordFinder
@@ -17,9 +11,9 @@ class Importer
     protected $adjacentWordFinder;
 
     /**
-     * @var Database
+     * @var Dictionary
      */
-    protected $database;
+    protected $dictionary;
 
     /**
      * @param Dictionary         $dictionary
@@ -29,7 +23,6 @@ class Importer
     {
         $this->dictionary         = $dictionary;
         $this->adjacentWordFinder = $adjacentWordFinder;
-        $this->database           = new Database;
     }
 
     /**
@@ -43,37 +36,9 @@ class Importer
     public function processAdjacentWords()
     {
         $words = $this->dictionary->getWords();
-        $adjacentWords = array();
 
         foreach ($words as $word) {
-            $adjacentWords[$word] = $this->adjacentWordFinder->getAdjacentWords($word, $words);
+            $this->dictionary->setAdjacentWords($word, $this->adjacentWordFinder->getAdjacentWords($word, $words));
         }
-    }
-
-    /**
-     * Save words
-     */
-    public function saveWords()
-    {
-        $words  = $this->dictionary->getWords();
-        $client = $this->database;
-
-        $client->startBatch();
-
-        foreach ($words as $word) {
-            $node = $client->makeNode();
-            $node
-                ->setProperty('word', $word)
-                ->save();
-        }
-
-        $client->commitBatch();
-    }
-
-    /**
-     * Save relationships
-     */
-    public function saveRelationships()
-    {
     }
 }
