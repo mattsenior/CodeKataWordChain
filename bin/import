@@ -1,0 +1,8 @@
+#!/usr/bin/php
+<?php
+
+include(__DIR__ . '/../vendor/autoload.php');
+
+$importer = new WordChain\Importer;
+
+$importer->importFile($argv[1]);

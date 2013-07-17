@@ -1,0 +1,12 @@
+{
+    "require": {
+        "everyman/neo4jphp": "dev-master"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {"psr-0": {"": "src"}}
+}
