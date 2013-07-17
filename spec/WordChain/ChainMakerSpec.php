@@ -29,10 +29,18 @@ class ChainMakerSpec extends ObjectBehavior
         $this->getShortestChain('lead', 'gold')->shouldreturn($paths);
     }
 
-    function it_should_throw_an_exception_if_there_is_no_chain($lengthComparator)
+    function it_should_throw_an_exception_if_inputs_are_different_lengths($lengthComparator)
     {
         $lengthComparator->areTheSameLength('a', 'ab')->shouldBeCalled()->willReturn(false);
 
         $this->shouldThrow('WordChain\Exception\LengthMismatchException')->duringGetShortestChain('a', 'ab');
+    }
+
+    function it_should_throw_an_exception_if_there_is_no_chain($lengthComparator, $dictionary)
+    {
+        $lengthComparator->areTheSameLength('lead', 'gold')->shouldBeCalled()->willReturn(true);
+        $dictionary->getShortestPaths('lead', 'gold')->shouldBeCalled()->willReturn(array());
+
+        $this->shouldThrow('WordChain\Exception\NoChainException')->duringGetShortestChain('lead', 'gold');
     }
 }

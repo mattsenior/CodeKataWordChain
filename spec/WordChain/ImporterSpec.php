@@ -21,10 +21,22 @@ class ImporterSpec extends ObjectBehavior
         $this->beConstructedWith($dictionary, $adjacentWordFinder);
     }
 
+    function it_should_empty_the_dictionary($dictionary)
+    {
+        $dictionary->setWords(array())->shouldBeCalled();
+        $this->reset();
+    }
+
     function it_should_add_words_to_the_dictionary($dictionary)
     {
         $dictionary->addWord('Hello')->shouldBeCalled();
         $this->addWord('Hello');
+    }
+
+    function it_should_add_multiple_words_to_the_dictionary($dictionary)
+    {
+        $dictionary->addWords(array('Hello', 'Goodbye'))->shouldBeCalled();
+        $this->addWords(array('Hello', 'Goodbye'));
     }
 
     function it_should_find_adjacent_words_from_the_dictionary($dictionary, $adjacentWordFinder)

@@ -31,4 +31,9 @@ class OneLetterDifferenceComparatorSpec extends ObjectBehavior
         $this->areOneLetterApart('aa', 'ab')->shouldReturn(true);
         $this->areOneLetterApart('abcdef', 'abceef')->shouldReturn(true);
     }
+
+    function it_should_be_case_insensitive()
+    {
+        $this->areOneLetterApart('ab', 'Ac')->shouldReturn(true);
+    }
 }

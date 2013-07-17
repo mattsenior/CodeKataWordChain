@@ -1,0 +1,36 @@
+#!/usr/bin/php
+<?php
+
+include(__DIR__ . '/../vendor/autoload.php');
+
+$lengthComparator = new \WordChain\Comparator\LengthComparator;
+$dictionary       = new \WordChain\Dictionary;
+$chainMaker       = new \WordChain\ChainMaker($lengthComparator, $dictionary);
+
+if (!(isset($argv[1]) and isset($argv[2]))) {
+    echo 'Please provide start and end words';
+    echo "\n";
+    exit;
+}
+
+$a = $argv[1];
+$b = $argv[2];
+
+try {
+    $chains = $chainMaker->getShortestChain($a, $b);
+} catch (\WordChain\Exception\LengthMismatchException $e) {
+    echo 'Words should be the same length';
+    echo "\n";
+    exit;
+} catch (\WordChain\Exception\NoChainException $e) {
+    echo 'No chain found';
+    echo "\n";
+    exit;
+}
+
+foreach ($chains as $chain) {
+    echo implode(' -> ', $chain);
+    echo "\n";
+}
+
+exit;

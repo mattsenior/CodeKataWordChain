@@ -33,6 +33,14 @@ class Importer
         $this->dictionary->addWord($word);
     }
 
+    /**
+     * @param array $words
+     */
+    public function addWords(array $words)
+    {
+        $this->dictionary->addWords($words);
+    }
+
     public function processAdjacentWords()
     {
         $words = $this->dictionary->getWords();
@@ -40,5 +48,10 @@ class Importer
         foreach ($words as $word) {
             $this->dictionary->setAdjacentWords($word, $this->adjacentWordFinder->getAdjacentWords($word, $words));
         }
+    }
+
+    public function reset()
+    {
+        $this->dictionary->setWords(array());
     }
 }

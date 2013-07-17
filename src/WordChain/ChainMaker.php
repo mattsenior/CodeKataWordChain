@@ -2,6 +2,8 @@
 
 namespace WordChain;
 
+use WordChain\Exception;
+
 class ChainMaker
 {
     /**
@@ -31,6 +33,12 @@ class ChainMaker
             throw new Exception\LengthMismatchException;
         }
 
-        return $this->dictionary->getShortestPaths($a, $b);
+        $paths = $this->dictionary->getShortestPaths($a, $b);
+
+        if (!count($paths)) {
+            throw new Exception\NoChainException;
+        }
+
+        return $paths;
     }
 }

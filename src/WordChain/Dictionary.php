@@ -2,9 +2,11 @@
 
 namespace WordChain;
 
-use Everyman\Neo4j\Client       as Database;
-use Everyman\Neo4j\Index        as Index;
-use Everyman\Neo4j\Cypher\Query as Query;
+use Everyman\Neo4j\Client       as Database,
+    Everyman\Neo4j\Index        as Index,
+    Everyman\Neo4j\Cypher\Query as Query;
+
+use WordChain\Exception;
 
 class Dictionary
 {
@@ -71,6 +73,20 @@ EOHD
     }
 
     /**
+     * @param array $words
+     */
+    public function addWords(array $words)
+    {
+        $this->db->startBatch();
+
+        foreach ($words as $word) {
+            $this->addWord($word);
+        }
+
+        $this->db->commitBatch();
+    }
+
+    /**
      * @return array
      */
     public function getWords()
@@ -120,25 +136,28 @@ EOHD
      */
     public function setAdjacentWords($word, array $adjacentWords)
     {
+        echo sprintf('Processing relationships for %s', $word);
+        echo "\n";
+
+        $this->db->startBatch();
+
         $wordNode = $this->dbIndex->findOne('word', $word);
 
         if (!$wordNode) {
-            $this->addWord($word);
-            $wordNode = $this->dbIndex->findOne('word', $word);
+            throw new Exception\WordNotFoundException(sprintf('Word not found: %s', $word));
         }
 
         foreach ($adjacentWords as $adjacentWord) {
             $adjacentWordNode = $this->dbIndex->findOne('word', $adjacentWord);
 
             if (!$adjacentWordNode) {
-
-                $this->addWord($adjacentWord);
-
-                $adjacentWordNode = $this->dbIndex->findOne('word', $adjacentWord);
+                throw new Exception\WordNotFoundException(sprintf('Word not found: %s', $adjacentWord));
             }
 
             $wordNode->relateTo($adjacentWordNode, 'IS_ADJACENT_TO')->save();
         }
+
+        $this->db->commitBatch();
     }
 
     /**

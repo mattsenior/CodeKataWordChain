@@ -3,6 +3,77 @@
 
 include(__DIR__ . '/../vendor/autoload.php');
 
-$importer = new WordChain\Importer;
+$lengthComparator              = new WordChain\Comparator\LengthComparator;
+$oneLetterDifferenceComparator = new WordChain\Comparator\OneLetterDifferenceComparator;
+$adjacentWordFinder            = new WordChain\AdjacentWordFinder($lengthComparator, $oneLetterDifferenceComparator);
+$dictionary                    = new WordChain\Dictionary;
+$importer                      = new WordChain\Importer($dictionary, $adjacentWordFinder);
 
-$importer->importFile($argv[1]);
+$file = @fopen($argv[1], 'r');
+
+if (!$file) {
+    echo 'Unable to open file';
+    echo "\n";
+    exit;
+}
+
+$importer->reset();
+echo 'Reset dictionary';
+echo "\n";
+
+$added = 0;
+
+$currentLetter = null;
+$batchWords    = array();
+
+while (($word = fgets($file, 1024)) !== false) {
+    $word = trim($word);
+
+    if ($word === '') {
+        continue;
+    }
+
+    $firstLetter = mb_strtolower(mb_substr($word, 0, 1));
+
+    if ($firstLetter !== $currentLetter) {
+        $importer->addWords($batchWords);
+
+        echo sprintf('Added batch of %s', count($batchWords));
+        echo "\n";
+
+        $batchWords = array();
+        $currentLetter = $firstLetter;
+    }
+
+    $batchWords[] = $word;
+
+    echo sprintf('Added %s to batch', $word);
+    echo "\n";
+
+    $added++;
+}
+
+if (count($batchWords)) {
+    $importer->addWords($batchWords);
+
+    echo sprintf('Added batch of %s', count($batchWords));
+    echo "\n";
+}
+
+echo sprintf('Added %s words', $added);
+echo "\n";
+
+if (!feof($file)) {
+    echo 'Error: unexpected fgets() fail';
+    echo "\n";
+}
+
+echo 'Processing word relationships';
+echo "\n";
+
+$importer->processAdjacentWords();
+
+echo 'Processed word relationships';
+echo "\n";
+
+exit;
