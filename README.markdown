@@ -10,5 +10,3 @@ dog
 The objective of this kata is to write a program that accepts start and end words and, using words from the dictionary, builds a word chain between them. For added programming fun, return the shortest word chain that solves each puzzle. For example, my Powerbook running Ruby can turn "lead" into "gold" in four steps (lead, load, goad, gold).
 
 On the final pairing, assuming that the problem is completed, to optimise the program to perform the task as quickly as possible. 
-
-£20 to the winning team if we can prove the fastest program
