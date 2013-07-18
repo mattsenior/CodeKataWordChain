@@ -4,7 +4,6 @@ namespace WordChain;
 
 class Importer
 {
-
     /**
      * @var AdjacentWordFinder
      */
@@ -26,6 +25,8 @@ class Importer
     }
 
     /**
+     * Add single word to the dictionary
+     *
      * @param string $word
      */
     public function addWord($word)
@@ -34,6 +35,8 @@ class Importer
     }
 
     /**
+     * Add multiple words to the dictionary
+     *
      * @param array $words
      */
     public function addWords(array $words)
@@ -41,6 +44,9 @@ class Importer
         $this->dictionary->addWords($words);
     }
 
+    /**
+     * Retrieve all words from the dictionary, then process & store adjacent words
+     */
     public function processAdjacentWords()
     {
         $words = $this->dictionary->getWords();
@@ -50,6 +56,9 @@ class Importer
         }
     }
 
+    /**
+     * Reset the dictionary to an empty state
+     */
     public function reset()
     {
         $this->dictionary->setWords(array());

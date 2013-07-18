@@ -27,6 +27,8 @@ class Dictionary
     }
 
     /**
+     * Remove and replace words in the dictionary 
+     *
      * @param array $words
      */
     public function setWords(array $words)
@@ -53,6 +55,8 @@ EOHD
     }
 
     /**
+     * Add single word
+     *
      * @param string $word
      */
     public function addWord($word)
@@ -73,6 +77,8 @@ EOHD
     }
 
     /**
+     * Add multiple words
+     *
      * @param array $words
      */
     public function addWords(array $words)
@@ -87,6 +93,8 @@ EOHD
     }
 
     /**
+     * Get all words
+     *
      * @return array
      */
     public function getWords()
@@ -109,6 +117,8 @@ EOHD
     }
 
     /**
+     * Retrieve adjacent words for given word
+     *
      * @param  string $word
      * @return array
      */
@@ -116,7 +126,7 @@ EOHD
     {
         $q = new Query($this->db, <<<EOHD
 START n=node:words(word='$word')
-MATCH (n)-[:IS_ADJACENT_TO]-(m)
+MATCH (n)-[:IS_ADJACENT_TO]->(m)
 RETURN m.word;
 EOHD
         );
@@ -131,6 +141,8 @@ EOHD
     }
 
     /**
+     * Store adjacent words for a given word
+     *
      * @param string $word
      * @param array  $adjacentWords
      */
@@ -161,6 +173,8 @@ EOHD
     }
 
     /**
+     * Get the shortest paths from A to B
+     *
      * @param  string $a
      * @param  string $b
      * @return array

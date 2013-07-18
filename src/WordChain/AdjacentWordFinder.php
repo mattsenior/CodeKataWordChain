@@ -28,6 +28,8 @@ class AdjacentWordFinder
     }
 
     /**
+     * Get adjacent words for a given word, from an array of words
+     *
      * @param  string $a
      * @param  array  $dictionary
      * @return array
@@ -37,14 +39,18 @@ class AdjacentWordFinder
         $adjacentWords = array();
 
         foreach ($dictionary as $b) {
+
+            // A word cannot be adjacent to itself
             if ($a === $b) {
                 continue; 
             }
 
+            // Adjacent words must be the same length
             if (!$this->lengthComparator->areTheSameLength($a, $b)) {
                 continue;
             }
 
+            // Adjacent words must only have one letter different
             if (!$this->oneLetterDifferenceComparator->areOneLetterApart($a, $b)) {
                 continue;
             }
