@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\WordChain\Comparator;
+namespace spec\Seniorio\WordChain\Comparator;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ class OneLetterDifferenceComparatorSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('WordChain\Comparator\OneLetterDifferenceComparator');
+        $this->shouldHaveType('\Seniorio\WordChain\Comparator\OneLetterDifferenceComparator');
     }
 
     function it_should_know_if_two_strings_of_different_lengths_are_not_one_letter_apart()

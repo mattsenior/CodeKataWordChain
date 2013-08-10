@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\WordChain;
+namespace spec\Seniorio\WordChain;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,12 +9,12 @@ class AdjacentWordFinderSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('WordChain\AdjacentWordFinder');
+        $this->shouldHaveType('Seniorio\WordChain\AdjacentWordFinder');
     }
 
     /**
-     * @param \WordChain\Comparator\LengthComparator              $lengthComparator
-     * @param \WordChain\Comparator\OneLetterDifferenceComparator $oneLetterDifferenceComparator
+     * @param \Seniorio\WordChain\Comparator\LengthComparator              $lengthComparator
+     * @param \Seniorio\WordChain\Comparator\OneLetterDifferenceComparator $oneLetterDifferenceComparator
      */
     function let($lengthComparator, $oneLetterDifferenceComparator)
     {

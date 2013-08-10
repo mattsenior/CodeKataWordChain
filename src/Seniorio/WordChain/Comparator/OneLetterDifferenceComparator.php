@@ -1,6 +1,6 @@
 <?php
 
-namespace WordChain\Comparator;
+namespace Seniorio\WordChain\Comparator;
 
 class OneLetterDifferenceComparator
 {

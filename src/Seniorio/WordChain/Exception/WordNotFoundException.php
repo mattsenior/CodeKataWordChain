@@ -1,6 +1,6 @@
 <?php
 
-namespace WordChain\Exception;
+namespace Seniorio\WordChain\Exception;
 
 class WordNotFoundException extends \RuntimeException
 {

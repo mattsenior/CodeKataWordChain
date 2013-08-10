@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\WordChain;
+namespace spec\Seniorio\WordChain;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -15,7 +15,7 @@ class DictionarySpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('WordChain\Dictionary');
+        $this->shouldHaveType('\Seniorio\WordChain\Dictionary');
     }
 
     function it_should_always_return_an_array()

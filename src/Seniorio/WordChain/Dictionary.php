@@ -1,12 +1,12 @@
 <?php
 
-namespace WordChain;
+namespace Seniorio\WordChain;
 
-use Everyman\Neo4j\Client       as Database,
-    Everyman\Neo4j\Index        as Index,
-    Everyman\Neo4j\Cypher\Query as Query;
+use Everyman\Neo4j\Client       as Database;
+use Everyman\Neo4j\Index        as Index;
+use Everyman\Neo4j\Cypher\Query as Query;
 
-use WordChain\Exception;
+use Seniorio\WordChain\Exception;
 
 class Dictionary
 {
@@ -24,6 +24,7 @@ class Dictionary
     {
         $this->db      = new Database;
         $this->dbIndex = new Index\NodeIndex($this->db, 'words');
+        $this->dbIndex->save();
     }
 
     /**

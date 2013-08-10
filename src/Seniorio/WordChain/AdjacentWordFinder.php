@@ -1,9 +1,9 @@
 <?php
 
-namespace WordChain;
+namespace Seniorio\WordChain;
 
-use WordChain\Comparator\LengthComparator,
-    WordChain\Comparator\OneLetterDifferenceComparator;
+use Seniorio\WordChain\Comparator\LengthComparator;
+use Seniorio\WordChain\Comparator\OneLetterDifferenceComparator;
 
 class AdjacentWordFinder
 {

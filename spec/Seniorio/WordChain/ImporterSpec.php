@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\WordChain;
+namespace spec\Seniorio\WordChain;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,12 +9,12 @@ class ImporterSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('WordChain\Importer');
+        $this->shouldHaveType('\Seniorio\WordChain\Importer');
     }
 
     /**
-     * @param \WordChain\Dictionary         $dictionary
-     * @param \WordChain\AdjacentWordFinder $adjacentWordFinder
+     * @param \Seniorio\WordChain\Dictionary         $dictionary
+     * @param \Seniorio\WordChain\AdjacentWordFinder $adjacentWordFinder
      */
     function let($dictionary, $adjacentWordFinder)
     {

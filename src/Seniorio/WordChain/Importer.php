@@ -1,6 +1,6 @@
 <?php
 
-namespace WordChain;
+namespace Seniorio\WordChain;
 
 class Importer
 {

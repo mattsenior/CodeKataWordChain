@@ -1,8 +1,8 @@
 <?php
 
-namespace WordChain;
+namespace Seniorio\WordChain;
 
-use WordChain\Exception;
+use Seniorio\WordChain\Exception;
 
 class ChainMaker
 {
